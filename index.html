@@ -17,6 +17,13 @@
 		async function init(){
 		const data = await d3.csv('https://sophiay404.github.io/cs498-data-viz/WHO-COVID-19-global-data_merge.csv');
 		console.log(data)
+		d3.select("body")
+		d3.select("svg")
+			.append("g")
+			.attr('transform','translate('+50+','+50+')')
+			.selectAll("circle").data(data).enter().append("circle")
+			.attr("cx", function(d,i) {return d.Cumulative_cases;})
+			.attr("cy", function(d,i) {return d.Cumulative_deaths;})
 	}
 	</script>
   </body>
