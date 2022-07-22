@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://d3js.org/d3.v7.min.js"></script>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HTML 5 Boilerplate</title>
-	<link rel="stylesheet" href="style.css">
-	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<!-- <link rel="stylesheet" href="style.css"> -->
   </head>
   
   <body onload="init()">
-	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script></script>
 	<h1>Heading Here</h1>
 	<svg width="300" height="300"></svg>
 	<script>
 		async function init(){
-		const data = await d3.csv('https://sophiay404.github.io/WHO-COVID-19-global-data_merge.csv');
+		const data = await d3.csv('https://sophiay404.github.io/cs-498-data-viz/WHO-COVID-19-global-data_merge.csv');
 		console.log(data)
 	}
 	</script>
