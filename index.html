@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://d3js.org/d3.v7.min.js"></script>
-<style> circle {fill:lightblue; stroke:black;}</style>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +30,7 @@
 		<h3>How does the number of engine cylinders affect average highway mileage?</h3>
 	</div>
 	
+	<div id="tooltip"></div>
 	
 	<svg id="viz1" width="900" height="900"></svg>
 	<svg id="viz2" width="900" height="900"></svg>
@@ -42,7 +42,9 @@
     "Dodge", "Ferrari", "Fiat", "Ford", "Genesis", "GMC", "Honda", "Hyundai", "Infiniti", "Jaguar", "Jeep", "Kia", "Lamborghini",
     "Land Rover", "Lexus", "Lincoln", "Lotus", "Maserati", "Mazda", "McLaren Automotive", "Mercedes-Benz", "MINI", "Mitsubishi",
     "Nissan", "Porsche", "Ram", "Rolls-Royce", "Roush Performance", "smart", "Subaru", "Tesla", "Toyota", "Volkswagen", "Volvo"];
-	
+		
+		var fuels = ["Diesel", "Gasoline", "Electricity"];
+		
 		async function scene1(){
 			const data = await d3.csv('https://flunky.github.io/cars2017.csv');
 			document.getElementById("viz1").style.display = "";
@@ -54,7 +56,6 @@
 			document.getElementById("viz3").style.display = "none";
 			document.getElementById("content3").style.display = "none";
 			
-			var x = d3.scaleBand().domain([10, 20, 30, 40, 50]).range([0, 700]);
 			var y = d3.scaleLinear().domain([0, 120]).range([700, 0]);
 			var scene1Scale = d3.scaleBand().domain(data.map(function (d) { return d.Make; })).range([0, 700])
 			
@@ -91,18 +92,19 @@
 				.attr("text-anchor", "middle")
 				.text("Car brand")
 			
+			// add graph
 			d3.select("#viz1")
 				.append("g")
 				.attr("transform","translate("+50+","+50+")")
 				.selectAll("scene1bar").data(data).enter().append("rect")
-				.attr("x", function(d,i) {return scene1Scale(makes[i]);})
+				.attr("x", function(d,i) {return scene1Scale(d.Make);})
 				.attr("y", function(d,i) {return y(d.AverageHighwayMPG);})
 				.attr("width", scene1Scale.bandwidth() - 5)
 				.attr("height", function (d, i) { return 700 - y(d.AverageHighwayMPG); })
 				.attr("fill", "purple");
 		}
 		
-		function scene2(){
+		async function scene2(){
 			document.getElementById("viz1").style.display = "none";
 			document.getElementById("content1").style.display = "none";
 			
@@ -111,9 +113,73 @@
 			
 			document.getElementById("viz3").style.display = "none";
 			document.getElementById("content3").style.display = "none";
+			
+			const data = await d3.csv('https://flunky.github.io/cars2017.csv');
+			var y = d3.scaleLinear().domain([0, 120]).range([700, 0]);
+			var scene2Scale = d3.scaleBand().domain(data.map(function (d) { return d.Fuel; })).range([0, 700])
+			
+			var tooltip = d3.select("#tooltip")
+				.style("opacity",0)
+				.style("position", "absolute")
+				.style("text-align", "center")
+				.style("width", 20)
+				.style("height", 20)
+				.style("background-color", "black")
+				.style("color", "white")
+			
+			// add y axis
+			d3.select("#viz2")
+				.append("g")
+				.attr("transform", "translate("+50+","+20+")")
+				.attr("class", "axis")
+				.call(d3.axisLeft(y));
+			
+			// add y axis label
+			d3.select("#viz2")
+				.append("text")
+				.attr("x", -350)
+				.attr("y", 15)
+				.attr("transform", "rotate("+-90+")")
+				.attr("text-anchor", "middle")
+				.text("Mileage")
+			
+			// add x axis
+			d3.select("#viz2")
+				.append("g")
+				.attr("transform","translate("+50+","+750+")")
+				.call(d3.axisBottom(scene2Scale))
+				.selectAll("text")
+				.attr("transform", "translate("+-10+","+0+")")
+				.style("text-anchor", "end");
+				
+			// add x axis label
+			d3.select("#viz2")
+				.append("text")
+				.attr("x", 400)
+				.attr("y", 850)
+				.attr("text-anchor", "middle")
+				.text("Fuel type")
+				
+			// add graph
+			d3.select("#viz2")
+				.append("g")
+				.attr("transform","translate("+170+","+50+")")
+				.selectAll("circle").data(data).enter().append("circle")
+				.attr("cx", function(d,i) {return scene2Scale(d.Fuel);})
+				.attr("cy", function(d,i) {return y(d.AverageHighwayMPG);})
+				.attr("r", 10)
+				.attr("fill", "green")
+				.on("mouseover", function(){d3.select(this).style("fill","black");})
+				.on("mouseover", function(event,d) {
+					const[x, y] = d3.pointer(event);
+					tooltip.style("opacity", 1)
+					.style("left", (x)+"px")
+					.style("top", (y)+"px")
+					.html(d.AverageHighwayMPG);})
+				.on("mouseout", function(){d3.select(this).style("fill", "green");});
 		}
 		
-		function scene3(){
+		async function scene3(){
 			document.getElementById("viz1").style.display = "none";
 			document.getElementById("content1").style.display = "none";
 			
@@ -122,6 +188,69 @@
 			
 			document.getElementById("viz3").style.display = "";
 			document.getElementById("content3").style.display = "";
+			
+			const data = await d3.csv('https://flunky.github.io/cars2017.csv');
+			var y = d3.scaleLinear().domain([0, 120]).range([700, 0]);
+			var scene3Scale = d3.scaleBand().domain(data.map(function (d) { return d.EngineCylinders; })).range([0, 700])
+			
+			var tooltip = d3.select("#tooltip")
+				.style("opacity",0)
+				.style("position", "absolute")
+				.style("text-align", "center")
+				.style("width", 20)
+				.style("height", 20)
+				.style("background-color", "white")
+				.style("color", "black")
+			
+			// add y axis
+			d3.select("#viz3")
+				.append("g")
+				.attr("transform", "translate("+50+","+20+")")
+				.attr("class", "axis")
+				.call(d3.axisLeft(y));
+			
+			// add y axis label
+			d3.select("#viz3")
+				.append("text")
+				.attr("x", -350)
+				.attr("y", 15)
+				.attr("transform", "rotate("+-90+")")
+				.attr("text-anchor", "middle")
+				.text("Mileage")
+			
+			// add x axis
+			d3.select("#viz3")
+				.append("g")
+				.attr("transform","translate("+50+","+750+")")
+				.call(d3.axisBottom(scene3Scale))
+				.selectAll("text")
+				.attr("transform", "translate("+-10+","+0+")")
+				.style("text-anchor", "end");
+				
+			// add x axis label
+			d3.select("#viz3")
+				.append("text")
+				.attr("x", 400)
+				.attr("y", 850)
+				.attr("text-anchor", "middle")
+				.text("Number of engine cylinders")
+				
+			// add graph
+			d3.select("#viz3")
+				.append("g")
+				.attr("transform","translate("+100+","+50+")")
+				.selectAll("circle").data(data).enter().append("circle")
+				.attr("cx", function(d,i) {return scene3Scale(d.EngineCylinders);})
+				.attr("cy", function(d,i) {return y(d.AverageHighwayMPG);})
+				.attr("r", 10)
+				.attr("fill", "orange")
+				.on("mouseover", function(d,i) { return
+					tooltip.style("opacity", 1)
+					.style("left",(d3.event.pageX)+"px")
+					.style("top",(d3.event.pageY)+"px")
+					.html("Mileage: " + d );
+				})
+				.on("mouseout", function() { return tooltip.style("opacity",0)});
 		}
 	</script>
   </body>
