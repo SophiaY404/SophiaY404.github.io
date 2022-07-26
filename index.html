@@ -32,9 +32,30 @@
 	
 	<div id="tooltip"></div>
 	
-	<svg id="viz1" width="900" height="900"></svg>
-	<svg id="viz2" width="900" height="900"></svg>
-	<svg id="viz3" width="900" height="900"></svg>
+	<svg id="viz1" width="900" height="900">
+		<text x="770" y="520">
+			<tspan x="770" dy="1.2em">Average US</tspan>
+			<tspan x="770" dy="1.2em">fuel economy:</tspan>
+			<tspan x="770" dy="1.2em">36 MPG </tspan>
+		</text>
+		<line x1="0" y1="540" x2="760" y2="540" stroke="black" stroke-dasharray="4" />
+	</svg>
+	<svg id="viz2" width="900" height="900">
+		<text x="770" y="520">
+			<tspan x="770" dy="1.2em">Average US</tspan>
+			<tspan x="770" dy="1.2em">fuel economy:</tspan>
+			<tspan x="770" dy="1.2em">36 MPG </tspan>
+		</text>
+		<line x1="0" y1="540" x2="760" y2="540" stroke="black" stroke-dasharray="4" />
+	</svg>
+	<svg id="viz3" width="900" height="900">
+		<text x="770" y="520">
+			<tspan x="770" dy="1.2em">Average US</tspan>
+			<tspan x="770" dy="1.2em">fuel economy:</tspan>
+			<tspan x="770" dy="1.2em">36 MPG </tspan>
+		</text>
+		<line x1="0" y1="540" x2="760" y2="540" stroke="black" stroke-dasharray="4" />
+	</svg>
 	
 	<script>
 		
@@ -75,7 +96,7 @@
 				.attr("y", 15)
 				.attr("transform", "rotate("+-90+")")
 				.attr("text-anchor", "middle")
-				.text("Mileage")
+				.text("Mileage (MPG)")
 			
 			// add x axis
 			d3.select("#viz1")
@@ -153,26 +174,21 @@
 				.attr("y", 15)
 				.attr("transform", "rotate("+-90+")")
 				.attr("text-anchor", "middle")
-				.text("Mileage")
+				.text("Mileage (MPG)")
 			
 			// add x axis
 			d3.select("#viz2")
 				.append("g")
 				.attr("transform","translate("+50+","+750+")")
 				.call(d3.axisBottom(scene2Scale))
-				.selectAll("text")
-				.attr("transform", "translate("+-10+","+0+")")
-				.style("text-anchor", "end");
 				
 			// add x axis label
 			d3.select("#viz2")
 				.append("text")
 				.attr("x", 400)
-				.attr("y", 850)
+				.attr("y", 800)
 				.attr("text-anchor", "middle")
 				.text("Fuel type")
-			
-
 			
 			// add graph
 			d3.select("#viz2")
@@ -232,25 +248,21 @@
 				.attr("y", 15)
 				.attr("transform", "rotate("+-90+")")
 				.attr("text-anchor", "middle")
-				.text("Mileage")
+				.text("Mileage (MPG)")
 			
 			// add x axis
 			d3.select("#viz3")
 				.append("g")
 				.attr("transform","translate("+50+","+750+")")
 				.call(d3.axisBottom(scene3Scale))
-				.selectAll("text")
-				.attr("transform", "translate("+-10+","+0+")")
-				.style("text-anchor", "end");
 				
 			// add x axis label
 			d3.select("#viz3")
 				.append("text")
 				.attr("x", 400)
-				.attr("y", 850)
+				.attr("y", 800)
 				.attr("text-anchor", "middle")
 				.text("Number of engine cylinders")
-			
 			
 			// add graph
 			d3.select("#viz3")
