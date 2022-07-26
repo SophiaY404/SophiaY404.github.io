@@ -130,7 +130,7 @@
 					const[x, y] = d3.pointer(event);
 					tooltip.style("opacity", 1)
 					.style("left", (x + 80)+"px")
-					.style("top", (y + 190)+"px")
+					.style("top", (y + 250)+"px")
 					.html(d.Make + " with " + d.EngineCylinders + " engine cylinders: " + d.AverageHighwayMPG + " MPG");
 					d3.select(this).style("fill","black");})
 				.on("mouseout", function(){
@@ -200,11 +200,12 @@
 				.attr("cy", function(d,i) {return y(d.AverageHighwayMPG);})
 				.attr("r", 10)
 				.attr("fill", "green")
+				.attr("stroke", "black")
 				.on("mouseover", function(event,d) {
 					const[x, y] = d3.pointer(event);
 					tooltip.style("opacity", 1)
 					.style("left", (x + 200)+"px")
-					.style("top", (y + 190)+"px")
+					.style("top", (y + 250)+"px")
 					.html(d.Make + " with fuel type " + d.Fuel + ": " + d.AverageHighwayMPG + " MPG");
 					d3.select(this).style("fill","black");})
 				.on("mouseout", function(){
@@ -274,11 +275,12 @@
 				.attr("cy", function(d,i) {return y(d.AverageHighwayMPG);})
 				.attr("r", 10)
 				.attr("fill", "orange")
+				.attr("stroke", "black")
 				.on("mouseover", function(event,d) {
 					const[x, y] = d3.pointer(event);
 					tooltip.style("opacity", 1)
 					.style("left", (x + 130)+"px")
-					.style("top", (y + 190)+"px")
+					.style("top", (y + 250)+"px")
 					.html(d.Make + " with " + d.EngineCylinders + " engine cylinders: " + d.AverageHighwayMPG + " MPG");
 					d3.select(this).style("fill","black");})
 				.on("mouseout", function(){
