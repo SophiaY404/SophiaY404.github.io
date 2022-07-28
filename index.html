@@ -5,30 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>2017 Fuel Efficiency</title>
+    <title>Viz Project: 2017 Fuel Efficiency</title>
 	<!-- <link rel="stylesheet" href="style.css"> -->
   </head>
   
-  <body onload="scene1()">
-	<h1>Narrative Visualization Project:<br>How Attributes of Automobiles Affect Fuel Economy in 2017</h1>
+  <body onload="intro()">
+	<h1>Narrative Visualization Project:<br>How Does Vehicle Type Information Affect Its Fuel Economy in 2017</h1>
+	<p>With the rising cost of gasoline and acceleration of climate change, it may be worthwhile to look at 
+	average highway fuel efficiency of automobiles and its relation to vehicle type.</p>
 	
 	
 	<div>
-		<button onclick="scene1()">Scene 1</button>
-		<button onclick="scene2()">Scene 2</button>
-		<button onclick="scene3()">Scene 3</button>
+		<p style="color:red;"><b>Use the buttons below to click between different vehicle type information.</b></p>
+		<button onclick="scene1()">Scene 1: Car brand</button>
+		<button onclick="scene2()">Scene 2: Fuel type</button>
+		<button onclick="scene3()">Scene 3: Engine cylinders</button>
 	</div>
 	
 	<div id="content1">
-		<h3>How does average highway mileage differ among major car brands?</h3>
+		<h3>Scene 1: How does average highway mileage differ among major car brands?</h3>
+		<p>Hover over the bars in the bar chart to see more information.</p>
 	</div>
 	
 	<div id="content2">
-		<h3>How does fuel type affect average highway mileage?</h3>
+		<h3>Scene 2: How does fuel type affect average highway mileage?</h3>
+		<p>Hover over the circles in the scatterplot to see more information.</p>
 	</div>
 	
 	<div id="content3">
-		<h3>How does the number of engine cylinders affect average highway mileage?</h3>
+		<h3>Scene 3: How does the number of engine cylinders affect average highway mileage?</h3>
+		<p>Hover over the circles in the scatterplot to see more information.</p>
 	</div>
 	
 	<div id="tooltip"></div>
@@ -59,6 +65,16 @@
 	</svg>
 	
 	<script>
+		function intro(){
+			document.getElementById("viz1").style.display = "none";
+			document.getElementById("content1").style.display = "none";
+			
+			document.getElementById("viz2").style.display = "none";
+			document.getElementById("content2").style.display = "none";
+			
+			document.getElementById("viz3").style.display = "none";
+			document.getElementById("content3").style.display = "none";
+		}
 		
 		async function scene1(){
 			document.getElementById("viz1").style.display = "";
@@ -130,7 +146,7 @@
 					const[x, y] = d3.pointer(event);
 					tooltip.style("opacity", 1)
 					.style("left", (x + 80)+"px")
-					.style("top", (y + 250)+"px")
+					.style("top", (y + 350)+"px")
 					.html(d.Make + " with " + d.EngineCylinders + " engine cylinders: " + d.AverageHighwayMPG + " MPG");
 					d3.select(this).style("fill","black");})
 				.on("mouseout", function(){
@@ -205,7 +221,7 @@
 					const[x, y] = d3.pointer(event);
 					tooltip.style("opacity", 1)
 					.style("left", (x + 200)+"px")
-					.style("top", (y + 250)+"px")
+					.style("top", (y + 350)+"px")
 					.html(d.Make + " with fuel type " + d.Fuel + ": " + d.AverageHighwayMPG + " MPG");
 					d3.select(this).style("fill","black");})
 				.on("mouseout", function(){
@@ -280,7 +296,7 @@
 					const[x, y] = d3.pointer(event);
 					tooltip.style("opacity", 1)
 					.style("left", (x + 130)+"px")
-					.style("top", (y + 250)+"px")
+					.style("top", (y + 350)+"px")
 					.html(d.Make + " with " + d.EngineCylinders + " engine cylinders: " + d.AverageHighwayMPG + " MPG");
 					d3.select(this).style("fill","black");})
 				.on("mouseout", function(){
