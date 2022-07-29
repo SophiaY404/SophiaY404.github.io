@@ -9,7 +9,7 @@
 	<!-- <link rel="stylesheet" href="style.css"> -->
   </head>
   
-  <body onload="intro()">
+  <body onload="scene1()">
 	<h1>Narrative Visualization Project:<br>How Does Vehicle Type Information Affect Its Fuel Economy in 2017</h1>
 	<p>With the rising cost of gasoline and acceleration of climate change, it may be worthwhile to look at 
 	average highway fuel efficiency of automobiles and its relation to vehicle type.</p>
@@ -17,9 +17,9 @@
 	
 	<div>
 		<p style="color:red;"><b>Use the buttons below to click between different vehicle type information.</b></p>
-		<button onclick="scene1()">Scene 1: Car brand</button>
-		<button onclick="scene2()">Scene 2: Fuel type</button>
-		<button onclick="scene3()">Scene 3: Engine cylinders</button>
+		<button id="button1" onclick="scene1()">Scene 1: Car brand</button>
+		<button id="button2" onclick="scene2()">Scene 2: Fuel type</button>
+		<button id="button3" onclick="scene3()">Scene 3: Engine cylinders</button>
 	</div>
 	
 	<div id="content1">
