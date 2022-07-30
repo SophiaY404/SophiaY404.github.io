@@ -238,10 +238,14 @@
 			
 			document.getElementById("viz3").style.display = "";
 			document.getElementById("content3").style.display = "";
-			
+						
 			const data = await d3.csv('https://flunky.github.io/cars2017.csv');
 			var y = d3.scaleLinear().domain([0, 120]).range([700, 0]);
-			var scene3Scale = d3.scalePoint().domain(data.map(function (d) { return d.EngineCylinders; }).sort(d3.ascending)).range([0, 700]).padding(0.5)
+			var scene3Scale = d3.scalePoint().domain(data
+												.sort(function(a,b){ return d3.ascending(+a.EngineCylinders, +b.EngineCylinders)})
+												.map(function (d) { return d.EngineCylinders; }))
+											.range([0, 700])
+											.padding(0.5)
 			
 			var tooltip = d3.select("#tooltip")
 				.style("opacity",0)
