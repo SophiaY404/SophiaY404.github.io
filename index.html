@@ -166,7 +166,7 @@
 			
 			const data = await d3.csv('https://flunky.github.io/cars2017.csv');
 			var y = d3.scaleLinear().domain([0, 120]).range([700, 0]);
-			var scene2Scale = d3.scaleBand().domain(data.map(function (d) { return d.Fuel; })).range([0, 700])
+			var scene2Scale = d3.scalePoint().domain(data.map(function (d) { return d.Fuel; })).range([0, 700]).padding(0.5)
 			
 			var tooltip = d3.select("#tooltip")
 				.style("opacity",0)
@@ -210,7 +210,7 @@
 			// add graph
 			d3.select("#viz2")
 				.append("g")
-				.attr("transform","translate("+170+","+50+")")
+				.attr("transform","translate("+50+","+50+")")
 				.selectAll("circle").data(data).enter().append("circle")
 				.attr("cx", function(d,i) {return scene2Scale(d.Fuel);})
 				.attr("cy", function(d,i) {return y(d.AverageHighwayMPG);})
@@ -220,7 +220,7 @@
 				.on("mouseover", function(event,d) {
 					const[x, y] = d3.pointer(event);
 					tooltip.style("opacity", 1)
-					.style("left", (x + 200)+"px")
+					.style("left", (x + 80)+"px")
 					.style("top", (y + 350)+"px")
 					.html(d.Make + " with fuel type " + d.Fuel + ": " + d.AverageHighwayMPG + " MPG");
 					d3.select(this).style("fill","black");})
@@ -241,7 +241,7 @@
 			
 			const data = await d3.csv('https://flunky.github.io/cars2017.csv');
 			var y = d3.scaleLinear().domain([0, 120]).range([700, 0]);
-			var scene3Scale = d3.scaleBand().domain(data.map(function (d) { return d.EngineCylinders; })).range([0, 700])
+			var scene3Scale = d3.scalePoint().domain(data.map(function (d) { return d.EngineCylinders; }).sort(d3.ascending)).range([0, 700]).padding(0.5)
 			
 			var tooltip = d3.select("#tooltip")
 				.style("opacity",0)
@@ -285,7 +285,7 @@
 			// add graph
 			d3.select("#viz3")
 				.append("g")
-				.attr("transform","translate("+100+","+50+")")
+				.attr("transform","translate("+50+","+50+")")
 				.selectAll("circle").data(data).enter().append("circle")
 				.attr("cx", function(d,i) {return scene3Scale(d.EngineCylinders);})
 				.attr("cy", function(d,i) {return y(d.AverageHighwayMPG);})
@@ -295,7 +295,7 @@
 				.on("mouseover", function(event,d) {
 					const[x, y] = d3.pointer(event);
 					tooltip.style("opacity", 1)
-					.style("left", (x + 130)+"px")
+					.style("left", (x + 80)+"px")
 					.style("top", (y + 350)+"px")
 					.html(d.Make + " with " + d.EngineCylinders + " engine cylinders: " + d.AverageHighwayMPG + " MPG");
 					d3.select(this).style("fill","black");})
